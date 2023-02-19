@@ -1,9 +1,14 @@
 package com.yeswin.common.core.response;
 
+import com.yeswin.common.core.response.YeswinCode;
+import com.yeswin.common.core.response.YeswinException;
+import com.yeswin.common.core.response.YeswinResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.sql.SQLIntegrityConstraintViolationException;
 
 @RestControllerAdvice
 @Slf4j
@@ -30,5 +35,10 @@ public class GlobalExceptionHandler {
     public YeswinResponse handleHttpMediaTypeNotAcceptableException(HttpMediaTypeNotAcceptableException exception) {
         log.error("接口调用异常，throwableMsg:{} ", exception.getMessage(), exception);
         return YeswinResponse.fail(YeswinCode.DEFAULT_HTTP_MEDIA_TYPE_NOT_ACCEPTABLE_CODE, "请求异常，请稍后重试");
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public YeswinResponse handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException  exception) {
+        return YeswinResponse.fail(YeswinCode.DEFAULT_HTTP_MEDIA_TYPE_NOT_ACCEPTABLE_CODE, "数据唯一限制出现重复");
     }
 }

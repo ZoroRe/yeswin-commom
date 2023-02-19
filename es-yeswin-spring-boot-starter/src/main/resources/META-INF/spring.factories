@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.yeswin.common.starter.YeswinCommonAutoConfiguration
+  com.yeswin.es.starter.YeswinESAutoConfiguration
